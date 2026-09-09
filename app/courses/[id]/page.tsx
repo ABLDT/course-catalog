@@ -1,6 +1,7 @@
-import LikeButton from "@/components/LikeButton";
+import Link from "next/link";
 import { getCourse, getCourses } from "@/lib/courses";
 import { notFound } from "next/navigation";
+import LikeButton from "@/components/LikeButton";
 
 type CoursePageProps = {
     params: Promise<{ id: string }>;
@@ -26,19 +27,28 @@ export default async function CoursePage({
 
     return (
         <main className="p-8">
-            <h1 className="text-3xl font-bold">
-                {course.title}
-            </h1>
+            <Link
+                href="/courses"
+                className="text-sm text-gray-600 hover:underline"
+            >
+                ← Back to Courses
+            </Link>
 
-            <p className="mt-4 text-gray-600">
-                {course.description}
-            </p>
+            <div className="mt-6 max-w-2xl rounded-lg border p-6">
+                <h1 className="text-3xl font-bold">
+                    {course.title}
+                </h1>
 
-            <p className="mt-4">
-                Credits: {course.credits}
-            </p>
+                <p className="mt-4 text-gray-600">
+                    {course.description}
+                </p>
 
-            <LikeButton initialLikes={course.likes} />
+                <p className="mt-4 font-medium">
+                    Credits: {course.credits}
+                </p>
+
+                <LikeButton initialLikes={course.likes} />
+            </div>
         </main>
     );
 }
