@@ -10,6 +10,10 @@ export default async function CoursesPage() {
                 Courses
             </h1>
 
+            <p className="mb-6 text-gray-600">
+                Available courses: {courses.length}
+            </p>
+
             <div className="grid gap-6 md:grid-cols-2">
                 {courses.map((course) => (
                     <CourseCard
