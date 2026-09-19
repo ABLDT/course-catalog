@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: "Course Catalog",
@@ -13,27 +17,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body>
         <header className="border-b">
-          <nav className="flex gap-6 p-4">
+          <nav className="flex gap-4 px-6 py-4 border-b border-slate-200">
             <Link
               href="/"
-              className="font-medium hover:underline"
+              className="px-3 py-2 rounded-md hover:bg-slate-100"
             >
               Home
             </Link>
 
             <Link
               href="/courses"
-              className="font-medium hover:underline"
+              className="px-3 py-2 rounded-md hover:bg-slate-100"
             >
               Courses
             </Link>
 
             <Link
               href="/about"
-              className="font-medium hover:underline"
+              className="px-3 py-2 rounded-md hover:bg-slate-100"
             >
               About
             </Link>
