@@ -1,26 +1,59 @@
 "use client";
 
 import { useState } from "react";
+import type { Course } from "@/lib/courses";
+
+const API = process.env.NEXT_PUBLIC_API_URL;
 
 type LikeButtonProps = {
+    courseId: string;
     initialLikes: number;
 };
 
-export default function LikeButton({
+export function LikeButton({
+    courseId,
     initialLikes,
 }: LikeButtonProps) {
     const [likes, setLikes] = useState<number>(initialLikes);
+    const [failed, setFailed] = useState(false);
 
-    function handleLike() {
-        setLikes(likes + 1);
+    async function handleClick() {
+        setFailed(false);
+
+        try {
+            const res = await fetch(
+                `${API}/courses/${courseId}/like`,
+                {
+                    method: "POST",
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error(`API error: ${res.status}`);
+            }
+
+            const course: Course = await res.json();
+
+            setLikes(course.likes);
+        } catch {
+            setFailed(true);
+        }
     }
 
     return (
-        <button
-            onClick={handleLike}
-            className="mt-6 rounded bg-black px-4 py-2 text-white hover:bg-gray-800"
-        >
-            Like: {likes}
-        </button>
+        <div>
+            <button
+                onClick={handleClick}
+                className="rounded-md border border-slate-300 px-3 py-1"
+            >
+                ❤ {likes}
+            </button>
+
+            {failed && (
+                <p className="text-red-600">
+                    Failed to like the course
+                </p>
+            )}
+        </div>
     );
 }

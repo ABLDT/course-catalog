@@ -1,19 +1,14 @@
 import Link from "next/link";
-import { getCourse, getCourses } from "@/lib/courses";
+import { getCourse } from "@/lib/courses";
 import { notFound } from "next/navigation";
-import LikeButton from "@/components/LikeButton";
+import { LikeButton } from "@/components/LikeButton";
+import { EnrollForm } from "@/components/EnrollForm";
+
 
 type CoursePageProps = {
     params: Promise<{ id: string }>;
 };
 
-export async function generateStaticParams() {
-    const courses = await getCourses();
-
-    return courses.map((course) => ({
-        id: course.id,
-    }));
-}
 
 export default async function CoursePage({
     params,
@@ -47,7 +42,16 @@ export default async function CoursePage({
                     Credits: {course.credits}
                 </p>
 
-                <LikeButton initialLikes={course.likes} />
+                <LikeButton
+                    courseId={course.id}
+                    initialLikes={course.likes}
+                />
+
+                <h2 className="mt-6 mb-2 text-xl font-bold">
+                    Enroll in this course
+                </h2>
+
+                <EnrollForm courseId={course.id} />
             </div>
         </main>
     );
