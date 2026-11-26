@@ -48,6 +48,12 @@ export default function RootLayout({
             >
               Filter
             </Link>
+
+            <Link href="/login"
+             className="px-3 py-2 rounded-md hover:bg-slate-100"
+            >
+              Login
+              </Link>
           </nav>
         </header>
 
